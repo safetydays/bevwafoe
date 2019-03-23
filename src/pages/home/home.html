@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div id="LMap"></div>
+  <div id="footer">
+    <div id="footerCalc">
+      <button ion-button (click)="getWayLength()" [disabled]="!this.calcEnabled">Berechnen</button>
+    </div>
+    <div id="footerLength">
+      Aktuelle Länge: {{ wayLength }} m
+    </div>
+  </div>
+</ion-content>
