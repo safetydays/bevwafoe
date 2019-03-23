@@ -1,5 +1,6 @@
 page-home {
 
+
   #footer {
     position: fixed;
     bottom: 0px;
@@ -10,7 +11,57 @@ page-home {
     z-index: 999999;
    }
 
+   #footerCalc {
+    float: right;
+    margin: 10px 10px 0px 0px;
+   }
+
+   #footerLength {
+    float: right;
+    width: 140px;
+    margin: 10px 10px 10px 10px;
+   }
+
    #LMap {
     width:100%; height:100%;
    }
+
+   .footerIcon {
+    height: 40px;
+   }
+
+
+   #footerBadges{
+     height: 80px;
+     float: left;
+     margin: 0px 0px 0px 20px;
+   }
+
+   .footerBadgeHighlight {
+    background-color: red;
+   }
+
+   .footerBadgeText {
+    float: right;
+    font-size: 14pt;
+   }
+
+   .footerBadgeIconArea {
+    float: right;
+   }
+
+   .footerBadge, .footerBadgePump {
+    height: 70px;
+    width: 70px;
+    margin: 5px 5px 5px 5px;
+    float: left;
+    background-color: #dddddd;
+    color: #0174DF;
+    }
+
+   .footerBadgePump {
+    border: 5px solid #0174DF;
+    border-radius: 5px;
+   }
+   
 }

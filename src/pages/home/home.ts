@@ -20,7 +20,6 @@ export class HomePage {
   //settings
   interpolationDistance = 10;
 
-
   constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
 
   }
@@ -70,7 +69,7 @@ export class HomePage {
     this.wayPoints.push(newWayMarker);
 
     //draw lines between new and last Point
-    if (this.lastWayPoint) {
+    if (this.lastWayPoint.length > 0) {
       let newWayLine: any = leaflet.polyline([[this.lastWayPoint[0],this.lastWayPoint[1]],[posLat, posLng]]);
       this.markerGroup.addLayer(newWayLine);
       this.map.addLayer(this.markerGroup);
@@ -81,7 +80,7 @@ export class HomePage {
 
     if (this.wayPoints.length > 1) {
       this.calcEnabled = true;
-      this.wayLength = this.getWayLength();
+      this.wayLength = Math.round(this.getWayLength());
     }
   }
 
@@ -172,13 +171,6 @@ export class HomePage {
     //tbd wget
     // BSP: https://api.open-elevation.com/api/v1/lookup?locations=41.161758,-8.583933
   }
-
-
-
-
-
-
-
 
 
 }
