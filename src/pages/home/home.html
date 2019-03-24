@@ -12,18 +12,35 @@
   <div id="footer">
 
     <div id="footerBadges">
+
       <div id="pump1" class="footerBadgePump">
         <div class="footerBadgeText">
           3/5
         </div>
         <div class="footerBadgeIcon">
-         <img class="footerIcon" src="/assets/icon/route-solid.svg">
+         <img class="footerIcon" src="/assets/icon/hannibal-pump-icon.png">
         </div>
       </div>
+
+      <div id="pump2" class="footerBadgePump">
+        <div class="footerBadgeText">
+          3/5
+        </div>
+        <div class="footerBadgeIcon">
+         <img class="footerIcon" src="/assets/icon/saugpumpe-icon.png">
+        </div>
+      </div>
+
     </div>
 
+    <div id="footerOverview">
+      <button ion-button (click)="openRessources()">Übersicht</button>
+    </div>
+    <div id="footerReset">
+      <button ion-button (click)="reset()" [disabled]="!this.calcEnabled">Löschen</button>
+    </div>
     <div id="footerCalc">
-      <button ion-button (click)="getWayLength()" [disabled]="!this.calcEnabled">Berechnen</button>
+      <button ion-button (click)="drawResult()" [disabled]="!this.calcEnabled">Berechnen</button>
     </div>
     <div id="footerLength">
       <div style="float: left; margin: 0px 10px 0px 0px;">

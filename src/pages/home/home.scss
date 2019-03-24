@@ -11,7 +11,17 @@ page-home {
     z-index: 999999;
    }
 
+   #footerOverview {
+    float: left;
+    margin: 10px 10px 0px 0px;
+   }
+
    #footerCalc {
+    float: right;
+    margin: 10px 10px 0px 0px;
+   }
+
+   #footerReset {
     float: right;
     margin: 10px 10px 0px 0px;
    }
@@ -38,7 +48,7 @@ page-home {
    }
 
    .footerBadgeHighlight {
-    background-color: red;
+    background-color: #B40404;
    }
 
    .footerBadgeText {
