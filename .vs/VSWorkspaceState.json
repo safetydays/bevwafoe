@@ -3,12 +3,15 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\assets",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\hose",
+    "\\src\\app\\shared\\pump",
     "\\src\\pages",
-    "\\src\\pages\\home",
-    "\\src\\pages\\list",
-    "\\src\\theme"
+    "\\src\\pages\\ressource-modal",
+    "\\www",
+    "\\www\\assets",
+    "\\www\\assets\\icon"
   ],
-  "SelectedNode": "\\config.xml",
+  "SelectedNode": "\\src\\pages\\ressource-modal\\ressource-modal.html",
   "PreviewInSolutionExplorer": false
 }

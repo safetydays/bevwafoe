@@ -23,6 +23,9 @@ export class HomePage {
   hoseLists = [];
   pumpLists = [];
   totalGPSPoints = [];
+  lx_pumpList = [["Hannibal",125,3,1,1],["Wilo",34,1.9,3,3],["Chiemsee",30,1.4,3,3]]; //Tuple aus Name,maxFlow und maxBar,maxPumps,leftPumps
+  lx_hoseList = [["F",20,30,30],["A",20,30,30],["B",20,30,30]]; //Name,Länge,MaxSchläuche,leftSchläuche
+
 
   //settings
   interpolationDistance = 10;
@@ -40,6 +43,35 @@ export class HomePage {
   //Icon für Pumpe Hannibal
   pumpIcon = leaflet.icon({
     iconUrl: '/assets/icon/hannibal-pump-icon.png',
+    iconSize:     [50, 50], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+
+   //Icon für Pumpe Chiemsee
+  chiPumpIcon = leaflet.icon({
+    iconUrl: '/assets/icon/zwischenpumpe-icon.png',
+    iconSize:     [50, 50], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+
+   //Icon für Pumpe Wilo
+ wilPumpIcon = leaflet.icon({
+    iconUrl: '/assets/icon/saugpumpe-icon.png',
+    iconSize:     [50, 50], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+     //Icon für Out of Pumps
+ ooPumpIcon = leaflet.icon({
+    iconUrl: '/assets/icon/oo-pumps-icon.png',
     iconSize:     [50, 50], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
     iconAnchor:   [25, 25], // point of the icon which will correspond to marker's location
@@ -120,7 +152,7 @@ export class HomePage {
   addMapMarker(posLat, posLng) {
 
     let newWayMarker: any = leaflet.marker([posLat, posLng]).on('click', () => {
-      alert('This is a wayPoint!');
+      alert('This is a wayPoint! ' + posLat + " " + posLng);
     });
     this.markerGroup.addLayer(newWayMarker);
     this.map.addLayer(this.markerGroup);
@@ -217,9 +249,70 @@ export class HomePage {
     return points;
 
   }
+  drawHardcodedPumps() {
+   this.calcAllGPSPoints();
+   let pumpMarker: any = leaflet.marker(this.totalGPSPoints[0], {icon: this.pumpIcon}).on('click', () => {
+          alert('This is a Hannibal Pump!');});
+   var gpspointlength = this.totalGPSPoints.length;
+   var aktivePoint = 10; 
+   while (this.totalGPSPoints.length > aktivePoint)
+    {
+      if (this.lx_pumpList[1][5] >= this.lx_pumpList[1][4])
+        {
+        let pumpMarker: any = leaflet.marker(this.totalGPSPoints[aktivePoint], {icon: this.wilPumpIcon}).on('click', () => {
+            alert('This is a Wilo Pump!');});
+            aktivePoint = aktivePoint + 5
+        }
+      else
+        {
+        if (this.lx_pumpList[2][5] >= this.lx_pumpList[2][4])
+        {
+        let pumpMarker: any = leaflet.marker(this.totalGPSPoints[aktivePoint], {icon: this.chiPumpIcon}).on('click', () => {
+            alert('This is a Chiemsee Pump!');});
+            aktivePoint = aktivePoint + 2
+        }
+      else
+      {
+      let pumpMarker: any = leaflet.marker(this.totalGPSPoints[aktivePoint], {icon: this.ooPumpIcon}).on('click', () => {
+            alert('Out of Pumps!');});
+      } 
+       
+       }
+    }
+        this.equipmentGroup.addLayer(pumpMarker);
+        this.map.addLayer(this.equipmentGroup);
+      //  document.getElementById("lengthsplit").innerHTML = gpspointlength;
+  }
 
+/*
+  // Auf der Map die Pumpen zeichnen
+  drawPumps()
+  {
+  var startpoint = this.totalGPSPoints[0]; //GPS points haben 10m unterschied, 1. & Letze Punkt ~10m
+  let pumpMarker: any = leaflet.marker(startpoint, {icon: this.pumpIcon}).on('click', () => {
+          alert('This is a Hannibal Pump!'); });
+  var hanniAmmount = 1;
+  var chiemAmmount = 0;
+  var wiloAmmount = 0;
+  var pumpAmmount = 1;
+  var reachedLength = 200;
+  while (pumpAmmount <= this.totalGPSPoints.length)
+    {
+      if (this.lx_pumpList[0][5] >= this.lx_pumpList[0][4])
+      {
+      var ppoint = this.totalGPSPoint[reachedLength/20];
+      var pumpname = "Hannibal";
+      drawNextPump(ppoint,pumpname);
+      }
+      
+    }
+  }
 
-
+  drawNextPump(point,pumpname)
+  {
+  
+  }
+  */
   calc() {
     //STEP 1: Check if total waylength > totalthoselength
 
@@ -573,7 +666,7 @@ export class HomePage {
             trackList.push(nHose);
           }
           gpsIterator = saveGPS;
-          preassure += pDiff;
+          pressure += pDiff;
         } else {
           alert("two pumps in the same spot!!");
           return;
@@ -583,7 +676,7 @@ export class HomePage {
         if(actHoseLength-dist>0){
           actHoseLength -= dist;
           lastGPS = newGPS;
-          preassure += pDiff;
+          pressure += pDiff;
         }
         else{
           var nHose = shLists.shift();
@@ -606,7 +699,29 @@ export class HomePage {
 
   calcAllGPSPoints(){
     //alle GPS-Punkte laden
+    var splitlength = 0;
+    var activeA = 0;
+    var activeB = 1;
+    var totalGPSPoints = [];
+    var reachedLengthAB = 0;
+    while (splitlength < this.getWayLength())
+    {
+      var splitpointA = this.wayPoints[activeA];
+      var splitpointB = this.wayPoints[activeB];
+      splitlength = splitlength + this.getDistance(splitpointA, splitpointB);
+      for (let x in this.calcInterpolation(splitpointA, splitpointB))
+      {
+        totalGPSPoints.push(x);
+      }
+      activeA++;
+      activeB++;
+    
+     }
 
+
+
+
+    /*
     for(var _i = 0; _i < this.wayPoints.length; _i++) {
 
      let points = [];
@@ -634,6 +749,7 @@ export class HomePage {
 
       }
     }
+    */
   }
 
 
@@ -646,7 +762,7 @@ export class HomePage {
 
     this.calcTrack(this.totalGPSPoints, hoseList, pumpList);
 
-   //let tList = this.buildTrack(this.totalGPSPoints, hoseList, pumpList, 7500);
+   let tList = this.buildTrack(this.totalGPSPoints, hoseList, pumpList, 7500);
 
    let lastPoint = [];
 

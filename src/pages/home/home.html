@@ -36,11 +36,12 @@
     <div id="footerOverview">
       <button ion-button (click)="openRessources()">Übersicht</button>
     </div>
+    <div id="lengthsplit"> Hallo </div>
     <div id="footerReset">
       <button ion-button (click)="reset()" [disabled]="!this.calcEnabled">Löschen</button>
     </div>
     <div id="footerCalc">
-      <button ion-button (click)="drawResult()" [disabled]="!this.calcEnabled">Berechnen</button>
+      <button ion-button (click)="drawHardcodedPumps()" [disabled]="!this.calcEnabled">Berechnen</button>
     </div>
     <div id="footerLength">
       <div style="float: left; margin: 0px 10px 0px 0px;">
